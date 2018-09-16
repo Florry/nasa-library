@@ -31,10 +31,12 @@ module.exports = (app, db) => {
     const passwordManager = new PasswordManager(userRepo);
     const authManager = new AuthManager(sessionRepo, userRepo, passwordManager);
 
-    const authenticateUser = authenticateUserMiddleware(sessionRepo, userRepo, authManager);
+    const authenticateUser = authenticateUserMiddleware(sessionRepo, authManager);
 
     const createUserHandler = new CreateUserHandler(userRepo, passwordManager);
     const loginHandler = new LoginHandler(userRepo, authManager);
+
+    // TODO: define response json schemas
 
     /**
      * Endpoint for registering an account
@@ -78,9 +80,15 @@ module.exports = (app, db) => {
 
                 <body>
                     <h1>This is html!</h1>
-                    <p>Logged in as ${req.user.username}</p>
-                    <p> ${Object.keys(req.user).map(k => {
+                    <p>Logged in as ${
+            // @ts-ignore
+            req.user.username
+            }</p>
+                    <p> ${
+            // @ts-ignore
+            Object.keys(req.user).map(k => {
                 const obj = {};
+                // @ts-ignore
                 obj[k] = req.user[k];
                 return JSON.stringify(obj);
             }).join(", ")}</p>

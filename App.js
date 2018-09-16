@@ -5,13 +5,20 @@ const mongo = require("mongodb");
 const config = require("./config");
 const port = config.backendPort;
 const constants = require("./lib/constants");
+const http = require("http");
+const Db = require("mongodb").Db;
 
 class App {
 
-    constructor() { }
+    constructor() {
+        /** @type {http.Server} */
+        this.server;
+    }
 
     /**
      * @param {String} mongodbUrl 
+     * 
+     * @return {Promise<Void>}
      */
     async start(mongodbUrl = "mongodb://localhost:27017/nasa-library") {
         this.db = await this._setupMongoDb(mongodbUrl);
@@ -19,22 +26,33 @@ class App {
     }
 
     /**
+     * @return {Promise<Void>}
+     */
+    async close() {
+        if (this.server)
+            await this.server.close();
+    }
+
+    /**
      * Starts the http server
+     * 
+     * @return {Void}
      */
     _setupHttpServer() {
-        const app = express();
+        this.app = express();
+        this.app.use(bodyParser.json());
 
-        app.use(bodyParser.json());
+        routes(this.app, this.db);
 
-        routes(app, this.db);
-
-        app.listen(port, () => console.log(`App backend running on ${port}`));
+        this.server = this.app.listen(port, () => { console.log(`App backend running on ${port}`); });
     }
 
     /**
      * Connects to and sets up mongo db.
      * 
      * @param {String} mongodbUrl 
+     * 
+     * @return {Promise<Db>}
      */
     async  _setupMongoDb(mongodbUrl) {
         const db = await mongo.connect(mongodbUrl);

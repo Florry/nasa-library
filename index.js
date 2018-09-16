@@ -49,11 +49,9 @@ const App = require("./App");
 
 (async () => {
 
+    process.on("unhandledRejection", (err) => { throw err; });
+
     const app = new App();
     await app.start();
 
 })();
-
-process.on("unhandledRejection", (reason) => {
-    console.error(reason);
-});
