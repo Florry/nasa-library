@@ -1,0 +1,11 @@
+.registration{}
+
+.registration__form-group{}
+
+.registration__error-panel--error{
+    color: red;
+}
+
+.registration__account-name{
+    font-weight: bold;
+}

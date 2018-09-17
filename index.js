@@ -49,7 +49,9 @@ const Server = require("./Server");
 
 (async () => {
 
-    process.on("unhandledRejection", (err) => { throw err; });
+    process.on("unhandledRejection", (err) => {
+        console.error(err);
+    });
 
     const server = new Server();
     await server.start();

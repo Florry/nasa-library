@@ -12,6 +12,7 @@ const AuthManager = require("./lib/managers/AuthManager");
 
 const CreateUserHandler = require("./lib/handlers/CreateUserHandler");
 const LoginHandler = require("./lib/handlers/LoginHandler");
+const LogoutHandler = require("./lib/handlers/LogoutHandler");
 
 const CreateUserRequestSchema = require("./lib/schemas/CreateUserRequestSchema");
 const LoginRequestSchema = require("./lib/schemas/LoginRequestSchema");
@@ -35,6 +36,7 @@ module.exports = (app, db) => {
 
     const createUserHandler = new CreateUserHandler(userRepo, passwordManager);
     const loginHandler = new LoginHandler(userRepo, authManager);
+    const logoutHandler = new LogoutHandler(authManager);
 
     // TODO: define response json schemas
 
@@ -50,10 +52,12 @@ module.exports = (app, db) => {
     // @ts-ignore
     app.post(constants.endpoints.LOGIN, validate({ body: LoginRequestSchema }), (req, res) => loginHandler.handle(req, res));
 
+    app.post(constants.endpoints.LOGOUT, authenticateUser, (req, res) => logoutHandler.handle(req, res));
+
     // TEMP!
     let i = 0;
 
-    app.get("/test", authenticateUser, (req, res) => {
+    app.get("/api/test", authenticateUser, (req, res) => {
         res.setHeader("Content-Type", " text/html");
 
         res.end(`

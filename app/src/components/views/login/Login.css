@@ -1,0 +1,12 @@
+.login{}
+
+.login__input{
+    width: 25%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login__error-panel--error{
+    color: red;
+}
