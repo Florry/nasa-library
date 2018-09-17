@@ -1,4 +1,4 @@
-const App = require("../App");
+const Server = require("../Server");
 const SpecUtils = require("./support/SpecUtils");
 const constants = require("../lib/constants");
 const SpecConstants = require("./support/SpecConstants");
@@ -7,22 +7,22 @@ const mongo = require("mongodb");
 
 describe("CreateUserHandler", () => {
 
-    /** @type {App} */
-    let app;
+    /** @type {Server} */
+    let server;
 
     /** @type {Db} */
     let db;
 
     beforeEach(async done => {
         db = await mongo.connect(SpecConstants.MONGO_SPEC_URL);
-        app = new App();
-        await app.start(SpecConstants.MONGO_SPEC_URL);
+        server = new Server();
+        await server.start(SpecConstants.MONGO_SPEC_URL);
         done();
     });
 
     afterEach(async done => {
         await SpecUtils.clearDatabases();
-        await app.close();
+        await server.close();
         done();
     });
 

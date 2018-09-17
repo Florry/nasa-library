@@ -45,13 +45,13 @@
  *              fullscreen
  *              
  */
-const App = require("./App");
+const Server = require("./Server");
 
 (async () => {
 
     process.on("unhandledRejection", (err) => { throw err; });
 
-    const app = new App();
-    await app.start();
+    const server = new Server();
+    await server.start();
 
 })();

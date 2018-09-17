@@ -8,7 +8,7 @@ const constants = require("./lib/constants");
 const http = require("http");
 const Db = require("mongodb").Db;
 
-class App {
+class Server {
 
     constructor() {
         /** @type {http.Server} */
@@ -68,4 +68,4 @@ class App {
 
 }
 
-module.exports = App;
+module.exports = Server;
