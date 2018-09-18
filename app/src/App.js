@@ -16,6 +16,8 @@ class App extends React.Component {
             setLoggedIn: this.setLoggedIn,
             loggedInUser: {}
         };
+
+        // TODO: if loggedIn; get user
     }
 
     render() {

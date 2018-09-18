@@ -14,6 +14,13 @@ const CreateUserHandler = require("./lib/handlers/CreateUserHandler");
 const LoginHandler = require("./lib/handlers/LoginHandler");
 const LogoutHandler = require("./lib/handlers/LogoutHandler");
 
+const SearchMediaHandler = require("./lib/handlers/SearchMediaHandler");
+const GetMediaByIdHandler = require("./lib/handlers/GetMediaByIdHandler");
+
+const AddFavoriteHandler = require("./lib/handlers/AddFavoriteHandler");
+const RemoveFavoriteHandler = require("./lib/handlers/RemoveFavoriteHandler");
+const GetFavoritesHandler = require("./lib/handlers/GetFavoritesHandler");
+
 const CreateUserRequestSchema = require("./lib/schemas/CreateUserRequestSchema");
 const LoginRequestSchema = require("./lib/schemas/LoginRequestSchema");
 
@@ -38,8 +45,15 @@ module.exports = (app, db) => {
     const loginHandler = new LoginHandler(userRepo, authManager);
     const logoutHandler = new LogoutHandler(authManager);
 
-    // TODO: define response json schemas
+    const searchMediaHandler = new SearchMediaHandler(favoritesRepo);
+    const getMediaByIdHandler = new GetMediaByIdHandler();
 
+    const addFavoriteHandler = new AddFavoriteHandler(favoritesRepo);
+    const removeFavoriteHandler = new RemoveFavoriteHandler(favoritesRepo);
+    const getFavoritesHandler = new GetFavoritesHandler(favoritesRepo);
+
+    // TODO: define response json schemas
+    // TODO: add json schemas for all endpoints
     /**
      * Endpoint for registering an account
      */
@@ -54,54 +68,13 @@ module.exports = (app, db) => {
 
     app.post(constants.endpoints.LOGOUT, authenticateUser, (req, res) => logoutHandler.handle(req, res));
 
-    // TEMP!
-    let i = 0;
 
-    app.get("/api/test", authenticateUser, (req, res) => {
-        res.setHeader("Content-Type", " text/html");
+    app.get(constants.endpoints.SEARCH_MEDIA, authenticateUser, (req, res) => searchMediaHandler.handle(req, res));
+    app.get(constants.endpoints.GET_MEDIA_BY_ID, authenticateUser, (req, res) => getMediaByIdHandler.handle(req, res));
+    // app.get(constants.endpoints.GET_MEDIA_METADATA, authenticateUser, (req, res) => getMediaMetadataHandler.handle(req, res));
 
-        res.end(`
-            <html>
-                <head>
-                    <title>Hello</title>
-                </head>
-
-                <style>
-                    body{
-                        background-color: darkgrey;
-                        padding: 30px;
-                    }
-                    h1{
-                        background-color: green;
-                    }
-                    p{
-                        overflow: hidden;
-                        word-break: break-all;
-                        color: white;
-                        background-color: black;
-                    }
-                </style>
-
-                <body>
-                    <h1>This is html!</h1>
-                    <p>Logged in as ${
-            // @ts-ignore
-            req.user.username
-            }</p>
-                    <p> ${
-            // @ts-ignore
-            Object.keys(req.user).map(k => {
-                const obj = {};
-                // @ts-ignore
-                obj[k] = req.user[k];
-                return JSON.stringify(obj);
-            }).join(", ")}</p>
-                <p>${i++}</p>
-                </body>
-
-            </html>        
-        `);
-
-    });
+    app.post(constants.endpoints.ADD_FAVORITE, authenticateUser, (req, res) => addFavoriteHandler.handle(req, res));
+    app.delete(constants.endpoints.REMOVE_FAVORITE, authenticateUser, (req, res) => removeFavoriteHandler.handle(req, res));
+    app.get(constants.endpoints.GET_FAVORITES, authenticateUser, (req, res) => getFavoritesHandler.handle(req, res));
 
 }

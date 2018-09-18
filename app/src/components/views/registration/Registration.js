@@ -1,5 +1,5 @@
 import React from "react";
-import AppAPIClient from "../../network/AppAPIClient";
+import APIClient from "../../network/APIClient";
 import "./Registration.css";
 import Constants from "../../../Constants";
 import RedirectButton from "../../shared/RedirectButton";
@@ -89,7 +89,7 @@ export default class Registration extends React.Component {
         e.preventDefault();
 
         try {
-            await AppAPIClient.register(this.state.credentials.username, this.state.credentials.password);
+            await APIClient.register(this.state.credentials.username, this.state.credentials.password);
             this.setState({ ...this.state, submitSucessful: true });
         } catch (err) {
             this.setState({ ...this.state, serverError: err.message ? err.message : err });

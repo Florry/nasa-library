@@ -45,7 +45,7 @@ class Server {
 
         this.app.use(
             cors({
-                origin: ["http://localhost:3000", "localhost:3000", "http://localhost:8080"],
+                origin: ["http://localhost:3000", "localhost:3000", "http://localhost:8080", "http://192.168.1.4:3000", "192.168.1.4:3000"],
                 credentials: true,
                 allowedHeaders: ["Authentication", "accesstoken", "X-Requested-With", "X-HTTP-Method-Override", "Content-Type", "Accept"],
                 exposedHeaders: "accesstoken"
@@ -72,6 +72,9 @@ class Server {
 
         db.collection(constants.collections.SESSIONS)
             .createIndex({ userId: 1 }, { unique: true, partialFilterExpression: { userId: { $exists: true } } });
+
+        db.collection(constants.collections.FAVORITES)
+            .createIndex({ userId: 1, nasaId: 1 }, { unique: true, partialFilterExpression: { userId: { $exists: true }, nasaId: { $exists: true } } });
 
         return db;
     }

@@ -1,0 +1,37 @@
+.media-item {
+    background-color: #eee;
+    max-width: 100%;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.media-item__image {
+    max-width: 100%;
+    max-height: 100px;
+    float: right;
+    cursor: pointer;
+}
+
+.media-item__starred {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    color: rgb(216, 186, 88);
+    display: inline-block;
+    font-style: normal;
+    font-weight: 400;
+    vertical-align: bottom;
+    font-size: 30px;
+}
+
+.media-item__details {
+    float: left;
+    text-align: left;
+    width: 50%;
+}
+
+.media-item__media {
+    float: right;
+    text-align: left;
+    width: 50%;
+}

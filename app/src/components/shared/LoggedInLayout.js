@@ -4,7 +4,7 @@ import Favorites from "../views/favorites/Favorites";
 import MediaSearch from "../views/media-search/MediaSearch";
 import Constants from "../../Constants";
 import RedirectButton from "../shared/RedirectButton";
-import AppAPIClient from "../network/AppAPIClient";
+import APIClient from "../network/APIClient";
 
 export default class LoggedInLayout extends React.Component {
 
@@ -26,7 +26,7 @@ export default class LoggedInLayout extends React.Component {
     }
 
     async  _logout() {
-        await AppAPIClient.logout();
+        await APIClient.logout();
     }
 
 }

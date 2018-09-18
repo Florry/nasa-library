@@ -1,7 +1,7 @@
 import React from "react";
 import "./Login.css";
 import { Redirect } from "react-router-dom";
-import AppAPIClient from "../../network/AppAPIClient";
+import APIClient from "../../network/APIClient";
 import Constants from "../../../Constants";
 import { AppContext } from "../../../AppContext";
 
@@ -22,7 +22,7 @@ export default class Login extends React.Component {
 
         return (
             <AppContext.Consumer>
-                {(state) => (
+                {(appState) => (
 
                     <div className="login">
                         <h2>Login</h2>
@@ -33,7 +33,7 @@ export default class Login extends React.Component {
                             try {
                                 const resp = await this._login(e);
                                 if (this.state.submitSucessful)
-                                    state.setLoggedIn(resp);
+                                    appState.setLoggedIn(resp);
                             } catch (err) { }
                         }}>
                             <input
@@ -79,7 +79,7 @@ export default class Login extends React.Component {
         e.preventDefault();
 
         try {
-            const resp = await AppAPIClient.login(this.state.credentials.username, this.state.credentials.password);
+            const resp = await APIClient.login(this.state.credentials.username, this.state.credentials.password);
             this.setState({ ...this.state, submitSucessful: true });
             return resp;
         } catch (err) {
