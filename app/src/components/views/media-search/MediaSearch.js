@@ -19,27 +19,27 @@ export default class MediaSearch extends React.Component {
                 }}>
 
                     <div style={this.styling} >
-                        <img src="https://images-assets.nasa.gov/image/PIA07081/PIA07081~thumb.jpg" title="Mars Rover Studies Soil on Mars" />
+                        <img src="https://images-assets.nasa.gov/image/PIA07081/PIA07081~thumb.jpg" title="Mars Rover Studies Soil on Mars" alt="Mars Rover Studies Soil on Mars" />
                         <h4>Mars Rover Studies Soil on Mars</h4>
                         <p>Mars Rover Studies Soil on Mars</p>
                         <p>2004-11-30T21:29:24Z</p>
                     </div>
 
                     <div style={this.styling}>
-                        <img src="https://images-assets.nasa.gov/image/PIA04778/PIA04778~thumb.jpg" title="Mars Rover Studies Soil on Mars" />
+                        <img src="https://images-assets.nasa.gov/image/PIA04778/PIA04778~thumb.jpg" title="Mars Rover Studies Soil on Mars" alt="Mars Rover Studies Soil on Mars" />
                         <h4>Mars Rover Studies Soil on Mars</h4>
                         <p>Mars Rover Studies Soil on Mars</p>
                         <p>2004-11-30T21:29:24Z</p>
                     </div>
                     <div style={this.styling} >
-                        <img src="https://images-assets.nasa.gov/image/PIA07081/PIA07081~thumb.jpg" title="Mars Rover Studies Soil on Mars" />
+                        <img src="https://images-assets.nasa.gov/image/PIA07081/PIA07081~thumb.jpg" title="Mars Rover Studies Soil on Mars" alt="Mars Rover Studies Soil on Mars" />
                         <h4>Mars Rover Studies Soil on Mars</h4>
                         <p>Mars Rover Studies Soil on Mars</p>
                         <p>2004-11-30T21:29:24Z</p>
                     </div>
 
                     <div style={this.styling}>
-                        <img src="https://images-assets.nasa.gov/image/PIA07081/PIA07081~thumb.jpg" title="Mars Rover Studies Soil on Mars" />
+                        <img src="https://images-assets.nasa.gov/image/PIA07081/PIA07081~thumb.jpg" title="Mars Rover Studies Soil on Mars" alt="Mars Rover Studies Soil on Mars" />
                         <h4>Mars Rover Studies Soil on Mars</h4>
                         <p>Mars Rover Studies Soil on Mars</p>
                         <p>2004-11-30T21:29:24Z</p>

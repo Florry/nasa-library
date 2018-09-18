@@ -22,3 +22,7 @@ img{
   max-width: 100%;
   max-height: 588px;
 }
+
+body{
+  overflow-y: scroll;
+}

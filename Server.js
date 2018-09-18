@@ -43,23 +43,9 @@ class Server {
         this.app = express();
         this.app.use(bodyParser.json());
 
-        // TODO: REMOVE ONCE FRONTEND IS DONE!
-
-        // this.app.use((req, res, next) => {
-        //     res.header("Access-Control-Allow-Origin", "*");
-        //     res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-        //     res.header("Access-Control-Allow-Credentials", "false");
-        //     res.header("Access-Control-Max-Age", "86400");
-        //     res.header("Access-Control-Allow-Headers", "Authentication, accesstoken, X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
-        //     res.header("Access-Control-Expose-Headers", "Authentication,accesstoken");
-        //     next();
-        // });
-
-        // TODO: 
-
         this.app.use(
             cors({
-                origin: ["http://localhost:3000", "http://localhost:8080"],
+                origin: ["http://localhost:3000", "localhost:3000", "http://localhost:8080"],
                 credentials: true,
                 allowedHeaders: ["Authentication", "accesstoken", "X-Requested-With", "X-HTTP-Method-Override", "Content-Type", "Accept"],
                 exposedHeaders: "accesstoken"
