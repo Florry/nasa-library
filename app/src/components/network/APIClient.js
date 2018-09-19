@@ -31,7 +31,13 @@ export default class APIClient extends HttpClient {
      * @param {String} nasaId 
      */
     static async getMediaById(nasaId) {
-        return await this._get(`${Constants.apiEndpoints.GET_MEDIA_BY_ID}`.replace(":nasaId", nasaId), true);
+        return await this._get(`${Constants.apiEndpoints.GET_MEDIA_BY_ID}`.replace(":nasaId", encodeURI(nasaId)), true);
+    }
+    /**
+     * @param {String} nasaId 
+     */
+    static async getMediaMetadata(nasaId) {
+        return await this._get(`${Constants.apiEndpoints.GET_MEDIA_METADATA}`.replace(":nasaId", encodeURI(nasaId)), true);
     }
 
     /** Favorites endpoints */
@@ -45,7 +51,7 @@ export default class APIClient extends HttpClient {
     }
 
     static async removeFavorite(nasaId) {
-        return await this._delete(Constants.apiEndpoints.REMOVE_FAVORITE.replace(":nasaId", nasaId), null, true);
+        return await this._delete(Constants.apiEndpoints.REMOVE_FAVORITE.replace(":nasaId", encodeURI(nasaId)), null, true);
     }
 
     static async getFavorites() {

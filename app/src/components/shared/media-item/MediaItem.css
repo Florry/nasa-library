@@ -32,6 +32,15 @@
 
 .media-item__media {
     float: right;
-    text-align: left;
+    text-align: right;
     width: 50%;
+}
+
+.media-item__metadata {
+    background-color: #ddd;
+    text-align: left;
+}
+
+.media-item__metadata__table * {
+    word-break: break-all;
 }

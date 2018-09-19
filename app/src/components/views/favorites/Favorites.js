@@ -23,9 +23,10 @@ export default class Favorites extends React.Component {
         super(props);
 
         this.toggleFavorited = async (nasaId, state) => {
-            if (state)
-                await APIClient.removeFavorite(nasaId);
-            else
+            if (state) {
+                const response = await APIClient.removeFavorite(nasaId);
+                state = response.favoriteRemoved;
+            } else
                 await APIClient.addFavorite(nasaId, this.state.favoriteMediaItems.find(item => item.data[0].nasa_id === nasaId));
 
             let favoriteMediaItems;

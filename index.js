@@ -15,6 +15,12 @@
 //     Possibility to add/remove favourites
 //     View the users favourites
 
+
+
+// TODO: 
+//    > Using a proper build script (and tools). (Please write instructions on how to build).
+//    ~ Some sorting and/or filtering options for the items
+
 /**
  * Create user
  * Login

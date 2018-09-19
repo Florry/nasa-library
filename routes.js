@@ -16,6 +16,7 @@ const LogoutHandler = require("./lib/handlers/LogoutHandler");
 
 const SearchMediaHandler = require("./lib/handlers/SearchMediaHandler");
 const GetMediaByIdHandler = require("./lib/handlers/GetMediaByIdHandler");
+const GetMediaMetadataHandler = require("./lib/handlers/GetMediaMetadataHandler");
 
 const AddFavoriteHandler = require("./lib/handlers/AddFavoriteHandler");
 const RemoveFavoriteHandler = require("./lib/handlers/RemoveFavoriteHandler");
@@ -23,7 +24,6 @@ const GetFavoritesHandler = require("./lib/handlers/GetFavoritesHandler");
 
 const CreateUserRequestSchema = require("./lib/schemas/CreateUserRequestSchema");
 const LoginRequestSchema = require("./lib/schemas/LoginRequestSchema");
-
 
 /**
  * Handles all endpoints
@@ -47,6 +47,7 @@ module.exports = (app, db) => {
 
     const searchMediaHandler = new SearchMediaHandler(favoritesRepo);
     const getMediaByIdHandler = new GetMediaByIdHandler();
+    const getMediaMetadataHandler = new GetMediaMetadataHandler();
 
     const addFavoriteHandler = new AddFavoriteHandler(favoritesRepo);
     const removeFavoriteHandler = new RemoveFavoriteHandler(favoritesRepo);
@@ -65,14 +66,18 @@ module.exports = (app, db) => {
      */
     // @ts-ignore
     app.post(constants.endpoints.LOGIN, validate({ body: LoginRequestSchema }), (req, res) => loginHandler.handle(req, res));
-
     app.post(constants.endpoints.LOGOUT, authenticateUser, (req, res) => logoutHandler.handle(req, res));
 
-
+    /**
+     * Media endpoints
+     */
     app.get(constants.endpoints.SEARCH_MEDIA, authenticateUser, (req, res) => searchMediaHandler.handle(req, res));
     app.get(constants.endpoints.GET_MEDIA_BY_ID, authenticateUser, (req, res) => getMediaByIdHandler.handle(req, res));
-    // app.get(constants.endpoints.GET_MEDIA_METADATA, authenticateUser, (req, res) => getMediaMetadataHandler.handle(req, res));
+    app.get(constants.endpoints.GET_MEDIA_METADATA, authenticateUser, (req, res) => getMediaMetadataHandler.handle(req, res));
 
+    /**
+     * Favorite endpoints
+     */
     app.post(constants.endpoints.ADD_FAVORITE, authenticateUser, (req, res) => addFavoriteHandler.handle(req, res));
     app.delete(constants.endpoints.REMOVE_FAVORITE, authenticateUser, (req, res) => removeFavoriteHandler.handle(req, res));
     app.get(constants.endpoints.GET_FAVORITES, authenticateUser, (req, res) => getFavoritesHandler.handle(req, res));

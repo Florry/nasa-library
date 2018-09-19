@@ -1,0 +1,19 @@
+.content-item--fullscreen {
+    color: white;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    background-color: black;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+}
+
+.content-item__image--fullscreen {
+    margin-right: auto;
+    margin-left: auto;
+    max-height: 100%;
+    max-width: 100%;
+}

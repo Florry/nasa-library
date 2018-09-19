@@ -1,6 +1,7 @@
 import React from "react";
 import "./MediaItem.css";
 import APIClient from "../../network/APIClient";
+import "./ContentItem.css";
 
 export default class ContentItem extends React.Component {
 
@@ -24,27 +25,20 @@ export default class ContentItem extends React.Component {
                         onClick={async e => { await this._enterFullscreen(e) }}
                         className="media-item__image"
                         src={this.props.src}
-                        title={this.props.title}
+                        title="Click for fullscreen"
                         alt={this.props.title}
                     />
 
                     <div
-                        style={{
-                            marginRight: "auto",
-                            marginLeft: "auto",
-                            color: "white",
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            cursor: "pointer",
-                            backgroundColor: "black"
-                        }}
+                        className="content-item--fullscreen"
+                        title="Click to close"
                         ref={ref => this.img = ref}
                         hidden={!this.state.fullscreenImage}
                         onClick={() => this._clickToExitFullscreen()}>
 
                         <img
-                            style={{ height: "100%" }}
+                            className="content-item__image--fullscreen"
+                            title="Click to close"
                             alt="Highres version"
                             src={this.state.fullscreenImage} />
 
@@ -52,7 +46,7 @@ export default class ContentItem extends React.Component {
                 </span>
                 );
             default:
-                return <span>{this.props.src}</span>
+                return <span>Unsupported media format, src: {this.props.src || "unable to determine src"}</span>
         }
     }
 
@@ -62,24 +56,24 @@ export default class ContentItem extends React.Component {
     async _enterFullscreen(e) {
         e.preventDefault();
 
-        if ("fullscreenEnabled" in document || "webkitFullscreenEnabled" in document || "mozFullScreenEnabled" in document || "msFullscreenEnabled" in document) {
-            // @ts-ignore
-            if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
-                if ("requestFullscreen" in this.img)
-                    this.img.requestFullscreen();
-                else if ("webkitRequestFullscreen" in this.img)
-                    // @ts-ignore
-                    this.img.webkitRequestFullscreen();
-                else if ("mozRequestFullScreen" in this.img)
-                    // @ts-ignore
-                    this.img.mozRequestFullScreen();
-                else if ("msRequestFullscreen" in this.img)
-                    // @ts-ignore
-                    this.img.msRequestFullscreen();
-            }
-        }
-        else
-            alert("Browser does not allow fullscreen");
+        // if ("fullscreenEnabled" in document || "webkitFullscreenEnabled" in document || "mozFullScreenEnabled" in document || "msFullscreenEnabled" in document) {
+        //     // @ts-ignore
+        //     if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
+        //         if ("requestFullscreen" in this.img)
+        //             this.img.requestFullscreen();
+        //         else if ("webkitRequestFullscreen" in this.img)
+        //             // @ts-ignore
+        //             this.img.webkitRequestFullscreen();
+        //         else if ("mozRequestFullScreen" in this.img)
+        //             // @ts-ignore
+        //             this.img.mozRequestFullScreen();
+        //         else if ("msRequestFullscreen" in this.img)
+        //             // @ts-ignore
+        //             this.img.msRequestFullscreen();
+        //     }
+        // }
+        // else
+        //     alert("Browser does not allow fullscreen");
 
         document.addEventListener("fullscreenchange", () => { this._exitFullscreen() });
         document.addEventListener("webkitfullscreenchange", () => { this._exitFullscreen() });

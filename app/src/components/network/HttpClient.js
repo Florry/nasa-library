@@ -1,6 +1,13 @@
 import Constants from "../../Constants";
 
 let accesstoken = ""; // TODO: Maybe encrypt this before saving in localstorage?
+let requestInProgress = false;
+
+let queuedRequests = [];
+
+let queueInterval = setInterval(() => {
+    // TODO: Implement queue system for requests
+});
 
 export default class HttpClient {
 
@@ -20,6 +27,8 @@ export default class HttpClient {
     }
 
     static async _request(method, path, body = null, loggedIn) {
+        requestInProgress = true;
+
         const options = {
             method: method,
             headers: {
