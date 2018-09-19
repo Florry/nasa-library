@@ -58,7 +58,7 @@ class Server {
 
         routes(this.app, this.db);
 
-        this.server = this.app.listen(port, () => { console.log(`Server running on ${port}`); });
+        this.server = this.app.listen(port, () => { console.log(`Server running on ${port}. Frontend is running on http://localhost:8080/#`); });
     }
 
     /**
