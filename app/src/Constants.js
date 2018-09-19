@@ -1,3 +1,6 @@
+/**
+ * Frontend constants
+ */
 export default {
 
     API_ROOT: "http://localhost:8080/api",

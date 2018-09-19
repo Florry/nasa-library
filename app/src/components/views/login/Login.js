@@ -30,8 +30,6 @@ export default class Login extends React.Component {
                     <div className="login">
                         <h2>Login</h2>
 
-                        {/* TODO: REMOVE THIS */} Localhost:8080
-
                         <form onSubmit={async e => {
                             try {
                                 await this._login(e);
