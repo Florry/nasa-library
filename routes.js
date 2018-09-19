@@ -24,9 +24,10 @@ const GetFavoritesHandler = require("./lib/handlers/GetFavoritesHandler");
 
 const CreateUserRequestSchema = require("./lib/schemas/CreateUserRequestSchema");
 const LoginRequestSchema = require("./lib/schemas/LoginRequestSchema");
+const AddFavoriteRequestSchema = require("./lib/schemas/AddFavoriteRequestSchema");
 
 /**
- * Handles all endpoints
+ * All endpoints
  * 
  * @param {express.Application} app 
  */
@@ -39,7 +40,7 @@ module.exports = (app, db) => {
     const passwordManager = new PasswordManager(userRepo);
     const authManager = new AuthManager(sessionRepo, userRepo, passwordManager);
 
-    const authenticateUser = authenticateUserMiddleware(sessionRepo, authManager);
+    const authenticateUser = authenticateUserMiddleware(authManager);
 
     const createUserHandler = new CreateUserHandler(userRepo, passwordManager);
     const loginHandler = new LoginHandler(userRepo, authManager);
@@ -53,8 +54,6 @@ module.exports = (app, db) => {
     const removeFavoriteHandler = new RemoveFavoriteHandler(favoritesRepo);
     const getFavoritesHandler = new GetFavoritesHandler(favoritesRepo);
 
-    // TODO: define response json schemas
-    // TODO: add json schemas for all endpoints
     /**
      * Endpoint for registering an account
      */
@@ -78,9 +77,10 @@ module.exports = (app, db) => {
     /**
      * Favorite endpoints
      */
-    app.post(constants.endpoints.ADD_FAVORITE, authenticateUser, (req, res) => addFavoriteHandler.handle(req, res));
-    app.delete(constants.endpoints.REMOVE_FAVORITE, authenticateUser, (req, res) => removeFavoriteHandler.handle(req, res));
-    app.get(constants.endpoints.GET_FAVORITES, authenticateUser, (req, res) => getFavoritesHandler.handle(req, res));
+    // @ts-ignore
+    app.post(constants.endpoints.ADD_FAVORITE, validate({ body: AddFavoriteRequestSchema }), authenticateUser, (req, res) => addFavoriteHandler.handle(req, res));
+    app.delete(constants.endpoints.REMOVE_FAVORITE, authenticateUser, (req, res) => removeFavoriteHandler.handle(req, res));  /** Would use json schema validation */
+    app.get(constants.endpoints.GET_FAVORITES, authenticateUser, (req, res) => getFavoritesHandler.handle(req, res)); /** Would use json schema validation */
 
     app.use(express.static("app/build"))
 

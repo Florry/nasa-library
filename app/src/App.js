@@ -4,8 +4,14 @@ import LoggedOutLayout from "./components/shared/LoggedOutLayout"
 import './App.css';
 import { AppContext } from "./AppContext";
 
+/**
+ * Base App
+ */
 class App extends React.Component {
 
+    /**
+     * @param {Object} props react props
+     */
     constructor(props) {
         super(props);
 

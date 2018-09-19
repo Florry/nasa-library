@@ -1,5 +1,8 @@
 import React from "react";
 
+/**
+ * Button extension component for redirecting to a hash
+ */
 export default class RedirectButton extends React.Component {
 
     render() {
@@ -10,6 +13,9 @@ export default class RedirectButton extends React.Component {
         );
     };
 
+    /**
+     * Redirects to the inputted hash
+     */
     _redirect() {
         window.location.hash = this.props.to;
     }

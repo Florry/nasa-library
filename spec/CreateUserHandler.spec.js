@@ -5,6 +5,10 @@ const SpecConstants = require("./support/SpecConstants");
 const Db = require("mongodb").Db;
 const mongo = require("mongodb");
 
+/**
+ * Spec example
+ */
+
 describe("CreateUserHandler", () => {
 
     /** @type {Server} */
@@ -87,7 +91,7 @@ describe("CreateUserHandler", () => {
 
             done.fail();
         } catch (err) {
-            // TODO: fix expect cases!
+            /** More expect cases would go here */
             done();
         }
     });
@@ -98,7 +102,7 @@ describe("CreateUserHandler", () => {
 
             done.fail();
         } catch (err) {
-            // TODO: fix expect cases!
+            /** More expect cases would go here */
             done();
         }
     });
@@ -109,7 +113,7 @@ describe("CreateUserHandler", () => {
 
             done.fail();
         } catch (err) {
-            // TODO: fix expect cases!
+            /** More expect cases would go here */
             done();
         }
     });

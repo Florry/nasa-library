@@ -5,6 +5,9 @@ import Login from "../views/login/Login";
 import Constants from "../../Constants";
 import RedirectButton from "./RedirectButton";
 
+/**
+ * The app layout for the logged out state.
+ */
 export default class LoggedOutLayout extends React.Component {
 
     render() {

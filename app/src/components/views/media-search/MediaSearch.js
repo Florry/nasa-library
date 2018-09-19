@@ -5,6 +5,9 @@ import APIClient from "../../network/APIClient";
 import MediaItem from "../../shared/media-item/MediaItem";
 import { MediaItemContext } from "../../shared/media-item/context/MediaItemContext";
 
+/**
+ * Media search view
+ */
 export default class MediaSearch extends React.Component {
 
     render() {
@@ -159,6 +162,11 @@ export default class MediaSearch extends React.Component {
         };
     }
 
+    /**
+     * Sets whether or not view is loading
+     * 
+     * @param {Boolean} state the state of loading
+     */
     _setLoading(state) {
         this.setState({
             ...this.state,
@@ -166,6 +174,9 @@ export default class MediaSearch extends React.Component {
         });
     }
 
+    /**
+     * Prepares media items search results markup
+     */
     _getResults() {
         if (this.state.mediaItems.length === 0)
             return <span />;
@@ -200,6 +211,9 @@ export default class MediaSearch extends React.Component {
         return mediaItems;
     }
 
+    /**
+     * Returns whether or not the query is empty
+     */
     _queryIsEmpty() {
         return this.state.query.q === ""
             && this.state.query.description === ""
@@ -211,6 +225,9 @@ export default class MediaSearch extends React.Component {
             && this.state.query.year_end === "";
     }
 
+    /**
+     * Does the actual search with the inputted query params
+     */
     async _doSearch() {
         if (this.state.loading || this._queryIsEmpty())
             return;
@@ -236,8 +253,10 @@ export default class MediaSearch extends React.Component {
     }
 
     /**
- * @param {React.SyntheticEvent<HTMLButtonElement>} e
-            */
+     * Loads the next page of search results
+     * 
+    * @param {React.SyntheticEvent<HTMLButtonElement>} e the event of the button press
+    */
     async _loadNextPage(e) {
         if (this.state.loading)
             return;
@@ -262,8 +281,10 @@ export default class MediaSearch extends React.Component {
     }
 
     /**
- * @param {React.SyntheticEvent<HTMLButtonElement>} e
-            */
+     * Clears the current search query and results
+     * 
+     * @param {React.SyntheticEvent<HTMLButtonElement>} e the event of the button press
+     */
     _clearSearchQuery(e) {
         e.preventDefault();
 

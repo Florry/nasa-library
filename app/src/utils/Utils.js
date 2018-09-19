@@ -1,6 +1,8 @@
 export default class Utils {
 
     /**
+     * Formats a date in a yyyy-mm-dd hh:mm format
+     * 
      * @param {String} dateString 
      */
     static formatDate(dateString) {

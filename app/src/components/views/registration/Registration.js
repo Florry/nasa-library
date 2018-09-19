@@ -4,6 +4,9 @@ import "./Registration.css";
 import Constants from "../../../Constants";
 import RedirectButton from "../../shared/RedirectButton";
 
+/**
+ * Registration view
+ */
 export default class Registration extends React.Component {
 
     state = {
@@ -83,7 +86,9 @@ export default class Registration extends React.Component {
     }
 
     /**
-     * @param {React.SyntheticEvent<HTMLFormElement>} e 
+     * Sends the create user request to the server using the inputted values in the markup
+     * 
+     * @param {React.SyntheticEvent<HTMLFormElement>} e the form submit event
      */
     async _submit(e) {
         e.preventDefault();

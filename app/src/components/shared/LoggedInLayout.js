@@ -6,6 +6,9 @@ import Constants from "../../Constants";
 import RedirectButton from "../shared/RedirectButton";
 import APIClient from "../network/APIClient";
 
+/**
+ * The app layout for the logged in state.
+ */
 export default class LoggedInLayout extends React.Component {
 
     render() {
@@ -25,6 +28,9 @@ export default class LoggedInLayout extends React.Component {
         );
     }
 
+    /**
+     * Logs out
+     */
     async  _logout() {
         await APIClient.logout();
     }

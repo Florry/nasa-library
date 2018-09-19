@@ -4,8 +4,8 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "start": "nodemon index.js",
-        "build": "cd app && npm run-script build",
+        "start": "node index.js",
+        "build": "npm install && cd app && npm install && npm run-script build",
         "test": "nyc --reporter=html --check-coverage --lines 90 node ./spec/support/jasmine-runner.js"
     },
     "author": "",

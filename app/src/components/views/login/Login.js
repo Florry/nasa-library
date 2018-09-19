@@ -5,6 +5,9 @@ import APIClient from "../../network/APIClient";
 import Constants from "../../../Constants";
 import { AppContext } from "../../../AppContext";
 
+/**
+ * Login view
+ */
 export default class Login extends React.Component {
 
     state = {
@@ -31,10 +34,10 @@ export default class Login extends React.Component {
 
                         <form onSubmit={async e => {
                             try {
-                                const resp = await this._login(e);
+                                await this._login(e);
 
                                 if (this.state.submitSucessful)
-                                    appState.setLoggedIn(resp);
+                                    appState.setLoggedIn();
                             } catch (err) { }
                         }}>
                             <input
@@ -74,6 +77,8 @@ export default class Login extends React.Component {
     }
 
     /**
+     * Logs in using the inputted username and password in the inputs in the markup
+     * 
      * @param {React.SyntheticEvent<HTMLFormElement>} e 
      */
     async _login(e) {
@@ -84,13 +89,6 @@ export default class Login extends React.Component {
             this.setState({ ...this.state, submitSucessful: true });
             return resp;
         } catch (err) {
-            //TODO: casts AbortError "The operation was aborted"
-            console.log("\n");
-            console.log("=======================================");
-            console.log("err");
-            console.log("=======================================");
-            console.log(require("util").inspect(err, null, null, true));
-            console.log("\n");
             this.setState({ ...this.state, serverError: err.message ? err.message : err });
         }
     }

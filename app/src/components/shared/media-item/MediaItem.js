@@ -5,6 +5,9 @@ import { MediaItemContext } from "./context/MediaItemContext";
 import APIClient from "../../network/APIClient";
 import Utils from "../../../utils/Utils";
 
+/**
+ * Media item for displaying information about a nasa media
+ */
 export default class MediaItem extends React.Component {
 
     state = {
@@ -80,6 +83,8 @@ export default class MediaItem extends React.Component {
     }
 
     /**
+     * Unfolds metadata by getting the metadata from the server and then showing it once done loading
+     * 
      * @param {React.SyntheticEvent<HTMLButtonElement>} e 
      */
     async _unfoldMetadata(e) {
@@ -109,13 +114,16 @@ export default class MediaItem extends React.Component {
                 ...this.state,
                 metadataUnfolded: !this.state.metadataUnfolded,
                 loading: false
-            })
+            });
+
             console.error(err);
         }
     }
 
+    /**
+     * Prepares markup for the metadata table
+     */
     _getMetadataTable() {
-        //TODO: style table so that the content won't go outside the table cells
         if (!this.state.metadata)
             return <span />
 

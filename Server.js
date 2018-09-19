@@ -17,7 +17,9 @@ class Server {
     }
 
     /**
-     * @param {String} mongodbUrl 
+     * Starts server
+     * 
+     * @param {String} mongodbUrl the url to use for mongodb
      * 
      * @return {Promise<Void>}
      */
@@ -27,6 +29,8 @@ class Server {
     }
 
     /**
+     * Closes server
+     * 
      * @return {Promise<Void>}
      */
     async close() {
@@ -64,7 +68,7 @@ class Server {
      * 
      * @return {Promise<Db>}
      */
-    async  _setupMongoDb(mongodbUrl) {
+    async _setupMongoDb(mongodbUrl) {
         const db = await mongo.connect(mongodbUrl);
 
         db.collection(constants.collections.USERS)

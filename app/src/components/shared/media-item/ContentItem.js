@@ -3,6 +3,10 @@ import "./MediaItem.css";
 import APIClient from "../../network/APIClient";
 import "./ContentItem.css";
 
+/**
+ * Content item for displaying content
+ * Note: only supports images!
+ */
 export default class ContentItem extends React.Component {
 
     state = {
@@ -18,6 +22,9 @@ export default class ContentItem extends React.Component {
         );
     }
 
+    /**
+     * Returns the correct markup for the content type provided.
+     */
     _getContent() {
         switch (this.props.contentType) {
             case "image":
@@ -52,6 +59,8 @@ export default class ContentItem extends React.Component {
     }
 
     /**
+     * Enters fullscreen mode for the content
+     * 
      * @param {React.SyntheticEvent<HTMLImageElement>} e 
      */
     async _enterFullscreen(e) {
@@ -71,26 +80,20 @@ export default class ContentItem extends React.Component {
         });
     }
 
+    /**
+     * Exits fullscreen
+     */
     _exitFullscreen() {
         this.setState({
             fullscreenImage: undefined
         });
     }
 
+    /**
+     * Clicks to exit fullscreen
+     */
     _clickToExitFullscreen() {
         this._exitFullscreen();
-
-        if ("exitFullscreen" in document)
-            document.exitFullscreen();
-        else if ("webkitExitFullscreen" in document)
-            // @ts-ignore
-            document.webkitExitFullscreen();
-        else if ("mozCancelFullScreen" in document)
-            // @ts-ignore
-            document.mozCancelFullScreen();
-        else if ("msExitFullscreen" in document)
-            // @ts-ignore
-            document.msExitFullscreen();
     }
 
 }

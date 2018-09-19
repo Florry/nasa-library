@@ -22,6 +22,8 @@ module.exports = {
 
 
 /**
+ * Parses a string into a number
+ * 
  * @param {String|Number} configVal 
  */
 function parseIntConfig(configVal) {
@@ -32,6 +34,8 @@ function parseIntConfig(configVal) {
 }
 
 /**
+ * Parses a string into a regex
+ * 
  * @param {String|RegExp} configVal 
  */
 function parseRegexConfig(configVal) {

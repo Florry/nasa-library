@@ -4,6 +4,9 @@ import MediaItem from "../../shared/media-item/MediaItem"
 import { MediaItemContext } from "../../shared/media-item/context/MediaItemContext";
 import Input from "../../shared/Input";
 
+/**
+ * Favorites view
+ */
 export default class Favorites extends React.Component {
 
     render() {
@@ -78,11 +81,17 @@ export default class Favorites extends React.Component {
         };
     }
 
+    /**
+     * Gets favorites from the server when component has mounted
+     */
     async componentDidMount() {
         const favoriteMediaItems = await APIClient.getFavorites();
         this.setState({ favoriteMediaItems });
     }
 
+    /**
+     * Prepares media items markup
+     */
     _renderMediaItems() {
         if (this.state.favoriteMediaItems.length === 0)
             return <span />;

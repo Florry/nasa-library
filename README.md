@@ -7,7 +7,6 @@ Nasa Media Library
 
 ## How to build
 - run `npm run-script build`
-- profit
 
 ## How to run
 - run `mongod`
@@ -17,11 +16,15 @@ Nasa Media Library
 ## How to test
 - run `mongod`
 - run `npm test`
+- `cd coverage`
+- open index.html
+    - coverage of all lines the project
+         - Note: the tests are inconclusive
 
 ## How to run development
 - run `mongod`
 - run `npm start`
-- cd app
+- `cd app`
 - run `npm start`
 - open http://localhost:3000
 - backend runs on http://localhost:8080
