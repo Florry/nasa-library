@@ -17,40 +17,24 @@
 
 
 
-// TODO: 
-//    > Using a proper build script (and tools). (Please write instructions on how to build).
-//    ~ Some sorting and/or filtering options for the items
-
 /**
- * Create user
- * Login
- *      auth header token
- *          auth sessions saved in database
- *          new token after each request
- *          middleware for getting user in request
- * Favorite image
- *      add 
- *      remove
- *      get
- * Get image / video
- *      sorting
- *      filtering
- * Get image metadata
- *      
  * 
- * Frontend
- *      mobile first 
- *      static
- *          signup
- *          login
- *      react app
- *          view images
- *               sorting
- *              filtering
- *          view image
- *              fullscreen
- *              
+ * TODO:
+ * =- Using a proper build script (and tools). (Please write instructions on how to build).
+ * - Some sorting and/or filtering options for the items
+ * - Fix sessionId not regenerating w/ each request
+ * - Comments
+ * 
+ * Nice to have
+ * - Error messages / exception handling
+ * - Logged in as / get user on login/refresh
+ * - Text such as "zoom", "favorite" and "unfavorite"
+ * - css
+ *      - table content goes outside tables if too small
+ * - two inputs for registration & password
+ * - registration / login input validation
  */
+
 const Server = require("./Server");
 
 (async () => {

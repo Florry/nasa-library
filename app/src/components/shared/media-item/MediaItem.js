@@ -3,11 +3,13 @@ import "./MediaItem.css";
 import ContentItem from "./ContentItem";
 import { MediaItemContext } from "./context/MediaItemContext";
 import APIClient from "../../network/APIClient";
+import Utils from "../../../utils/Utils";
 
 export default class MediaItem extends React.Component {
 
     state = {
-        metadataUnfolded: false
+        metadataUnfolded: false,
+        loading: false
     };
 
     render() {
@@ -29,43 +31,40 @@ export default class MediaItem extends React.Component {
                         </div>
 
                         <div className="media-item__details">
+                            <p className="media-item__date">{Utils.formatDate(this.props.date)}</p>
 
-                            <b>
+                            <span
+                                title={this.props.isFavorited ? "unfavorite" : "favorite"}
+                                onClick={async () => await context.toggleFavorited(this.props.id, this.props.isFavorited)}
+                                className="media-item__starred">
 
-                                <span
-                                    onClick={async e => await context.toggleFavorited(this.props.id, this.props.isFavorited)}
-                                    className="media-item__starred">
-
-                                    {this.props.isFavorited ? <img src={
+                                {this.props.isFavorited ? <img src={
+                                    //@ts-ignore
+                                    require("../../../img/star-full.png")
+                                }
+                                    alt="filled star"
+                                />
+                                    :
+                                    <img src={
                                         //@ts-ignore
-                                        require("../../../img/star-full.png")
+                                        require("../../../img/star-empty.png")
                                     }
-                                        alt="filled star"
-                                    />
-                                        :
-                                        <img src={
-                                            //@ts-ignore
-                                            require("../../../img/star-empty.png")
-                                        }
-                                            alt="empty star"
-                                        />}
+                                        alt="empty star"
+                                    />}
 
-                                </span>
+                            </span>
 
-                                &nbsp; {this.props.resultNumber + 1}.
-
-                            </b>
-
-                            {this.props.title}
-
-                            <p>{this.props.date}</p>
+                            <span className="media-item__title">
+                                <b>{this.props.resultNumber + 1}.</b>
+                                {this.props.title}
+                            </span>
 
                         </div>
 
                         <div className="clearfix" />
 
                         <button onClick={async e => { await this._unfoldMetadata(e) }}>
-                            {this.state.metadataUnfolded ? "V Metadata" : "> Metadata"}
+                            {this.state.metadataUnfolded ? "V Metadata" : "> Metadata"} {this.state.loading ? "- Loading..." : ""}
                         </button>
                         <div
                             className="media-item__metadata"
@@ -86,6 +85,12 @@ export default class MediaItem extends React.Component {
     async _unfoldMetadata(e) {
         try {
             e.preventDefault();
+
+            this.setState({
+                ...this.state,
+                loading: true
+            });
+
             let metadata;
 
             if (!this.state.metadata)
@@ -96,9 +101,15 @@ export default class MediaItem extends React.Component {
             this.setState({
                 ...this.state,
                 metadataUnfolded: !this.state.metadataUnfolded,
-                metadata: metadata || {}
+                metadata: metadata || {},
+                loading: false
             });
         } catch (err) {
+            this.setState({
+                ...this.state,
+                metadataUnfolded: !this.state.metadataUnfolded,
+                loading: false
+            })
             console.error(err);
         }
     }

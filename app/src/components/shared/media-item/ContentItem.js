@@ -6,13 +6,14 @@ import "./ContentItem.css";
 export default class ContentItem extends React.Component {
 
     state = {
-        fullscreenImage: undefined
+        fullscreenImage: undefined,
+        loading: false
     };
 
     render() {
         return (
             <span>
-                {this._getContent()}
+                {this.state.loading ? "Loading... " : ""} {this._getContent()}
             </span>
         );
     }
@@ -56,35 +57,17 @@ export default class ContentItem extends React.Component {
     async _enterFullscreen(e) {
         e.preventDefault();
 
-        // if ("fullscreenEnabled" in document || "webkitFullscreenEnabled" in document || "mozFullScreenEnabled" in document || "msFullscreenEnabled" in document) {
-        //     // @ts-ignore
-        //     if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
-        //         if ("requestFullscreen" in this.img)
-        //             this.img.requestFullscreen();
-        //         else if ("webkitRequestFullscreen" in this.img)
-        //             // @ts-ignore
-        //             this.img.webkitRequestFullscreen();
-        //         else if ("mozRequestFullScreen" in this.img)
-        //             // @ts-ignore
-        //             this.img.mozRequestFullScreen();
-        //         else if ("msRequestFullscreen" in this.img)
-        //             // @ts-ignore
-        //             this.img.msRequestFullscreen();
-        //     }
-        // }
-        // else
-        //     alert("Browser does not allow fullscreen");
-
-        document.addEventListener("fullscreenchange", () => { this._exitFullscreen() });
-        document.addEventListener("webkitfullscreenchange", () => { this._exitFullscreen() });
-        document.addEventListener("mozfullscreenchange", () => { this._exitFullscreen() });
-        document.addEventListener("MSFullscreenChange", () => { this._exitFullscreen() });
+        this.setState({
+            ...this.state,
+            loading: true
+        });
 
         const resp = await APIClient.getMediaById(this.props.id);
         const imageUrl = !resp.collection.items[0].href.includes(".tif") ? resp.collection.items[0].href : resp.collection.items[1].href
 
         this.setState({
-            fullscreenImage: imageUrl
+            fullscreenImage: imageUrl,
+            loading: false
         });
     }
 

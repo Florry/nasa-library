@@ -12,63 +12,79 @@ export default class MediaSearch extends React.Component {
             <div className="media-search">
 
                 <h2>Search Media</h2>
+                <p>Click images to zoom to fullscreen</p>
 
                 <form
                     className="media-search__form"
                     onSubmit={async () => await this._doSearch()}>
                     <Input
-                        onChange={(value) => { this.setState({ ...this.state, query: { ...this.state.query, q: value } }) }}
+                        onChange={(value) => this.setState({ ...this.state, query: { ...this.state.query, q: value } })}
                         placeholder="search query"
                         value={this.state.query.q}
                     />
                     <Input
-                        onChange={(value) => { this.setState({ ...this.state, query: { ...this.state.query, description: value } }) }}
+                        onChange={(value) => this.setState({ ...this.state, query: { ...this.state.query, description: value } })}
                         placeholder="description"
                         value={this.state.query.description}
                     />
                     <Input
-                        onChange={(value) => { this.setState({ ...this.state, query: { ...this.state.query, keywords: value } }) }}
+                        onChange={(value) => this.setState({ ...this.state, query: { ...this.state.query, keywords: value } })}
                         placeholder="keywords"
                         value={this.state.query.keywords}
                     />
                     <Input
-                        onChange={(value) => { this.setState({ ...this.state, query: { ...this.state.query, nasa_id: value } }) }}
+                        onChange={(value) => this.setState({ ...this.state, query: { ...this.state.query, nasa_id: value } })}
                         placeholder="nasa_id"
                         value={this.state.query.nasa_id}
                     />
                     <Input
-                        onChange={(value) => { this.setState({ ...this.state, query: { ...this.state.query, location: value } }) }}
+                        onChange={(value) => this.setState({ ...this.state, query: { ...this.state.query, location: value } })}
                         placeholder="location"
                         value={this.state.query.location}
                     />
                     <Input
-                        onChange={(value) => { this.setState({ ...this.state, query: { ...this.state.query, title: value } }) }}
+                        onChange={(value) => this.setState({ ...this.state, query: { ...this.state.query, title: value } })}
                         placeholder="title"
                         value={this.state.query.title}
                     />
                     <Input
-                        onChange={(value) => { this.setState({ ...this.state, query: { ...this.state.query, year_start: value } }) }}
+                        onChange={(value) => this.setState({ ...this.state, query: { ...this.state.query, year_start: value } })}
                         placeholder="from year"
                         value={this.state.query.year_start}
                     />
                     <Input
-                        onChange={(value) => { this.setState({ ...this.state, query: { ...this.state.query, year_end: value } }) }}
+                        onChange={(value) => this.setState({ ...this.state, query: { ...this.state.query, year_end: value } })}
                         placeholder="to year"
                         value={this.state.query.year_end}
                     />
 
-                    <button
-                        className="media-search__form__search-button"
-                        type="submit">
-                        Search
-                    </button>
+                    <div>
+                        <button
+                            className="media-search__form__search-button"
+                            type="submit">
+                            Search
+                        </button>
+                        <button
+                            onClick={e => this._clearSearchQuery(e)}
+                            className="media-search__form__clear-search-button">
+                            Clear search
+                        </button>
 
-                    <button
-                        onClick={e => this._clearSearchQuery(e)}
-                        className="media-search__form__clear-search-button">
-                        Clear search
-                    </button>
+                    </div>
+
                 </form>
+
+                <span>
+                    <label htmlFor="only-images">
+                        Show only images
+                                </label>
+                    <Input
+                        checked={this.state.showOnlyImages}
+                        onChange={(value) => this.setState({ ...this.state, showOnlyImages: !this.state.showOnlyImages })}
+                        id="only-images"
+                        type="checkbox"
+                    />
+                </span>
 
                 <div className="media-search__search-result">
                     <MediaItemContext.Provider value={this.state}>
@@ -85,7 +101,10 @@ export default class MediaSearch extends React.Component {
                             Load more...
                     </button>
 
+                        {this.state.loading ? <div>Loading...</div> : ""}
+
                     </MediaItemContext.Provider>
+
                 </div>
 
             </div >
@@ -96,6 +115,8 @@ export default class MediaSearch extends React.Component {
         super(props);
 
         this.toggleFavorited = async (nasaId, state) => {
+            this._setLoading(true);
+
             if (state)
                 await APIClient.removeFavorite(nasaId);
             else
@@ -112,7 +133,8 @@ export default class MediaSearch extends React.Component {
 
             this.setState({
                 ...this.state,
-                mediaItems
+                mediaItems,
+                loading: false
             });
         }
 
@@ -129,11 +151,19 @@ export default class MediaSearch extends React.Component {
             },
             resultsQuery: {},
             mediaItems: [],
+            showOnlyImages: false,
             currentPage: 0,
             currentNumberOfResults: -1,
             toggleFavorited: this.toggleFavorited,
             loading: false
         };
+    }
+
+    _setLoading(state) {
+        this.setState({
+            ...this.state,
+            loading: state
+        });
     }
 
     _getResults() {
@@ -144,6 +174,10 @@ export default class MediaSearch extends React.Component {
 
         this.state.mediaItems.forEach((item, i) => {
             const media = item.links && item.links.length > 0 ? item.links[0] : {};
+
+            if (this.state.showOnlyImages && media.render !== "image")
+                return;
+
             const title = item.data && item.data.length > 0 ? item.data[0].title : "No title";
             const created = item.data && item.data.length > 0 ? item.data[0].date_created : "No data"
             const id = item.data && item.data.length > 0 ? item.data[0].nasa_id : null;
@@ -202,8 +236,8 @@ export default class MediaSearch extends React.Component {
     }
 
     /**
-     * @param {React.SyntheticEvent<HTMLButtonElement>} e 
-     */
+ * @param {React.SyntheticEvent<HTMLButtonElement>} e
+            */
     async _loadNextPage(e) {
         if (this.state.loading)
             return;
@@ -228,8 +262,8 @@ export default class MediaSearch extends React.Component {
     }
 
     /**
-     * @param {React.SyntheticEvent<HTMLButtonElement>} e 
-     */
+ * @param {React.SyntheticEvent<HTMLButtonElement>} e
+            */
     _clearSearchQuery(e) {
         e.preventDefault();
 

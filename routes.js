@@ -82,4 +82,6 @@ module.exports = (app, db) => {
     app.delete(constants.endpoints.REMOVE_FAVORITE, authenticateUser, (req, res) => removeFavoriteHandler.handle(req, res));
     app.get(constants.endpoints.GET_FAVORITES, authenticateUser, (req, res) => getFavoritesHandler.handle(req, res));
 
+    app.use(express.static("app/build"))
+
 }

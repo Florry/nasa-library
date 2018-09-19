@@ -9,15 +9,12 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        this.setLoggedIn = (user) => this.setState({ ...this.state, loggedIn: true, loggedInUser: user })
+        this.setLoggedIn = (user) => this.setState({ ...this.state, loggedIn: true })
 
         this.state = {
             loggedIn: window.localStorage.getItem("accesstoken") !== null,
-            setLoggedIn: this.setLoggedIn,
-            loggedInUser: {}
+            setLoggedIn: this.setLoggedIn
         };
-
-        // TODO: if loggedIn; get user
     }
 
     render() {
@@ -25,14 +22,15 @@ class App extends React.Component {
             <AppContext.Provider
                 value={this.state}>
 
+                <div className="App-header__background" />
+
                 <div
                     className="App">
+
                     <div
                         className="App-header">
                         <h1>Nasa image library</h1>
                     </div>
-
-                    {this.state.loggedIn ? <span>Logged in as {Object.keys(this.state.loggedInUser)}</span> : ""}
 
                     <div
                         className="App-content">

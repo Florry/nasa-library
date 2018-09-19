@@ -32,6 +32,7 @@ export default class Login extends React.Component {
                         <form onSubmit={async e => {
                             try {
                                 const resp = await this._login(e);
+
                                 if (this.state.submitSucessful)
                                     appState.setLoggedIn(resp);
                             } catch (err) { }
@@ -75,7 +76,7 @@ export default class Login extends React.Component {
     /**
      * @param {React.SyntheticEvent<HTMLFormElement>} e 
      */
-    async  _login(e) {
+    async _login(e) {
         e.preventDefault();
 
         try {

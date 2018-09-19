@@ -2,6 +2,7 @@ import React from "react";
 import APIClient from "../../network/APIClient";
 import MediaItem from "../../shared/media-item/MediaItem"
 import { MediaItemContext } from "../../shared/media-item/context/MediaItemContext";
+import Input from "../../shared/Input";
 
 export default class Favorites extends React.Component {
 
@@ -11,6 +12,19 @@ export default class Favorites extends React.Component {
 
                 <div>
                     <h2>Favorites</h2>
+                    <p>Click images to zoom to fullscreen</p>
+                    <span>
+                        <label htmlFor="only-images">
+                            Show only images
+                                </label>
+                        <Input
+                            checked={this.state.showOnlyImages}
+                            onChange={(value) => this.setState({ ...this.state, showOnlyImages: !this.state.showOnlyImages })}
+                            id="only-images"
+                            type="checkbox"
+                        />
+                    </span>
+
                     {this._renderMediaItems()}
                 </div>
 
@@ -59,7 +73,8 @@ export default class Favorites extends React.Component {
 
         this.state = {
             toggleFavorited: this.toggleFavorited,
-            favoriteMediaItems: []
+            favoriteMediaItems: [],
+            showOnlyImages: false
         };
     }
 
@@ -76,6 +91,10 @@ export default class Favorites extends React.Component {
 
         this.state.favoriteMediaItems.forEach((item, i) => {
             const media = item.links && item.links.length > 0 ? item.links[0] : {};
+
+            if (this.state.showOnlyImages && media.render !== "image")
+                return;
+
             const title = item.data && item.data.length > 0 ? item.data[0].title : "No title";
             const created = item.data && item.data.length > 0 ? item.data[0].date_created : "No data"
             const id = item.data && item.data.length > 0 ? item.data[0].nasa_id : null;

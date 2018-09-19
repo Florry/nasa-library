@@ -4,7 +4,7 @@
 module.exports = {
 
     /** Regex used to validate password has correct length, correct amount of characters etc. */
-    passwordValidationRegex: parseRegexConfig(process.env.PASSWORD_VALIDATION_REGEX || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,100}$/), // TODO: Change this to schema validation
+    passwordValidationRegex: parseRegexConfig(process.env.PASSWORD_VALIDATION_REGEX || /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,100}$/),
 
     /** Port to be running the backend on */
     backendPort: parseIntConfig(process.env.BACKEND_PORT || 8080),

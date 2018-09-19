@@ -1,13 +1,6 @@
 import Constants from "../../Constants";
 
-let accesstoken = ""; // TODO: Maybe encrypt this before saving in localstorage?
-let requestInProgress = false;
-
-let queuedRequests = [];
-
-let queueInterval = setInterval(() => {
-    // TODO: Implement queue system for requests
-});
+let accesstoken = "";
 
 export default class HttpClient {
 
@@ -27,8 +20,6 @@ export default class HttpClient {
     }
 
     static async _request(method, path, body = null, loggedIn) {
-        requestInProgress = true;
-
         const options = {
             method: method,
             headers: {
@@ -45,18 +36,20 @@ export default class HttpClient {
 
         try {
             const response = await fetch(Constants.API_ROOT + path, options);
-            accesstoken = response.headers.get("accesstoken");
 
-            // TODO: look at how this should be saved
-            window.localStorage.setItem("accesstoken", accesstoken);
-
-            if (response.status === 401)
+            if (response.status === 401) {
                 HttpClient._clearAccessToken();
+            }
 
             const responseBody = await response.json();
 
             if (response.status >= 400)
                 throw responseBody;
+
+            accesstoken = response.headers.get("accesstoken");
+
+            /** We would want to store this more safely in a real situation */
+            window.localStorage.setItem("accesstoken", accesstoken);
 
             return responseBody;
         } catch (err) {
@@ -65,8 +58,10 @@ export default class HttpClient {
     }
 
     static _clearAccessToken() {
-        accesstoken = "";
-        localStorage.clear();
-        window.location.reload();
+        if (accesstoken !== "") {
+            accesstoken = "";
+            localStorage.clear();
+            window.location.reload();
+        }
     }
 }
