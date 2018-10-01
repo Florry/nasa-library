@@ -5,10 +5,6 @@ const SpecConstants = require("./support/SpecConstants");
 const Db = require("mongodb").Db;
 const mongo = require("mongodb");
 
-/**
- * Spec example
- */
-
 describe("CreateUserHandler", () => {
 
     /** @type {Server} */
@@ -21,12 +17,14 @@ describe("CreateUserHandler", () => {
         db = await mongo.connect(SpecConstants.MONGO_SPEC_URL);
         server = new Server();
         await server.start(SpecConstants.MONGO_SPEC_URL);
+
         done();
     });
 
     afterEach(async done => {
         await SpecUtils.clearDatabases();
         await server.close();
+
         done();
     });
 
@@ -60,9 +58,8 @@ describe("CreateUserHandler", () => {
             const username = "user";
             const password = "Localhost:3030";
 
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 10; i++)
                 await SpecUtils.post(constants.endpoints.CREATE_USER, { username: username + i, password });
-            }
 
             const dbResponse = await db.collection(constants.collections.USERS).find().toArray();
             const salts = dbResponse.map(r => r.salt);
@@ -91,7 +88,7 @@ describe("CreateUserHandler", () => {
 
             done.fail();
         } catch (err) {
-            /** More expect cases would go here */
+            expect(err.statusCode).toBe(500);
             done();
         }
     });
@@ -102,7 +99,7 @@ describe("CreateUserHandler", () => {
 
             done.fail();
         } catch (err) {
-            /** More expect cases would go here */
+            expect(err.statusCode).toBe(500);
             done();
         }
     });
@@ -113,7 +110,7 @@ describe("CreateUserHandler", () => {
 
             done.fail();
         } catch (err) {
-            /** More expect cases would go here */
+            expect(err.statusCode).toBe(400);
             done();
         }
     });

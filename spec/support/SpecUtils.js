@@ -2,6 +2,7 @@ const config = require("../../config");
 const request = require("request");
 const mongo = require("mongodb");
 const SpecConstants = require("./SpecConstants");
+const constants = require("../../lib/constants");
 
 class SpecUtils {
 
@@ -20,14 +21,30 @@ class SpecUtils {
 
     /**
      * @param {String} path 
-     * @param {Object} body 
+     * @param {Object=} body 
+     * @param {Object=} headers 
      * 
      * @return {Promise<Object>}
      */
-    static async post(path, body) {
+    static async post(path, body = {}, headers = {}) {
+        return SpecUtils._request("post", path, body, headers);
+    }
+
+    /**
+     * @param {String} path 
+     * @param {Object=} headers 
+     * 
+     * @return {Promise<Object>}
+     */
+    static async delete(path, headers = {}) {
+        return SpecUtils._request("delete", path, {}, headers);
+    }
+
+    static async _request(method, path, body, headers) {
         return new Promise((resolve, reject) => {
-            request.post(`http://localhost:${config.backendPort}${path}`, {
+            request[method](`http://localhost:${config.backendPort}${path}`, {
                 json: body,
+                headers,
                 callback: (error, response) => {
                     if (response.statusCode >= 300)
                         reject(response.toJSON());
@@ -39,6 +56,22 @@ class SpecUtils {
                 }
             });
         });
+    }
+
+    /**
+     * @param {String} username 
+     * @param {String} password 
+     */
+    static async createUserAccount(username = "username", password = "Localhost:8080") {
+        return await SpecUtils.post(constants.endpoints.CREATE_USER, { username, password });
+    }
+
+    /**
+     * @param {String} username 
+     * @param {String} password 
+     */
+    static async login(username = "username", password = "Localhost:8080") {
+        return await SpecUtils.post(constants.endpoints.LOGIN, { username, password });
     }
 
     /**

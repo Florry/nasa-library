@@ -29,5 +29,11 @@
         "jasmine": "2.8.0",
         "jasmine-spec-reporter": "^4.2.1",
         "nyc": "^11.4.1"
+    },
+    "nyc": {
+        "exclude": [
+            "spec/*",
+            "lib/schemas/*"
+        ]
     }
 }
