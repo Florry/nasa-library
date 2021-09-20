@@ -1,30 +1,45 @@
 # Nasa Media Library
+Work in progress Typescript / React hooks / Nextjs version, for old javascript version (and old time react) see https://github.com/Florry/nasa-library/commit/6ad2e5cdbaff6283118cdfff71aed9f039c02b36.
+Base functionality is implemented.
+
+## TODO:
+- Implement real setting of cookie rather than just making a string.
+- Redo all css, take advantage of nextjs css modules and get some better styling going.
+- Fix all code TODOs.
+- Go through backend code and clean things up (the code is only converted to typescript and is a few years old)
+
+## // readme TODO:
+- single run command for both frontend and backend
+- single build command for both frontend and backend
 
 ## Requirements
-- nodejs v.8 (latest/"recommended for most users" version) - https://nodejs.org/en/ 
-    - npm v.5 (latest) - included in nodejs
+- nodejs v.14 (latest/"recommended for most users" version) - https://nodejs.org/en/
+    - npm v.7 (latest) - included in nodejs
 - mongo db - https://www.mongodb.com/download-center?jmp=nav#community
 
-## How to build
-- run `npm run-script build`
 
-## How to run
+# How to run
+- npm install
 - run `mongod`
-- run `npm start`
-- open http://localhost:8080/# in browser
 
-## How to test
-- run `mongod`
-- run `npm test`
-- `cd coverage`
-- open index.html
-    - coverage of all lines the project
-- **Note:** the tests are inconclusive
+then
+## How to run backend
+- run `npm start`
 
-## How to run development
+## How to run frontend
+- cd `./app`
+- run `npm run build`
+- run `npm start`
+
+
+# How to run development
+- npm install
 - run `mongod`
-- run `npm start`
-- `cd app`
-- run `npm start`
-- open http://localhost:3000/# in browser
-- backend runs on http://localhost:8080
+
+then
+## How to run backend
+- run `npm dev`
+
+## How to run frontend
+- cd `./app`
+- run `npm dev`

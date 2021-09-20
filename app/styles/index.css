@@ -1,0 +1,11 @@
+body {
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 18px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+label {
+	display: block;
+}

@@ -1,39 +1,53 @@
 {
-    "name": "nasa-library",
-    "version": "1.0.0",
-    "description": "",
-    "main": "app.js",
-    "scripts": {
-        "start": "node index.js",
-        "build": "npm install && cd app && npm install && npm run-script build",
-        "test": "nyc --reporter=html --check-coverage --lines 90 node ./spec/support/jasmine-runner.js"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "cors": "^2.8.4",
-        "csprng": "^0.1.2",
-        "express": "^4.16.3",
-        "express-jsonschema": "^1.1.6",
-        "get-port": "^4.0.0",
-        "jwt-simple": "^0.5.1",
-        "mongodb": "^2.2.36",
-        "ms": "^2.1.1",
-        "request": "^2.88.0",
-        "uuid": "^3.3.2"
-    },
-    "devDependencies": {
-        "@types/mongodb": "2.2.19",
-        "@types/express": "^4.16.0",
-        "@types/jasmine": "^2.8.6",
-        "jasmine": "2.8.0",
-        "jasmine-spec-reporter": "^4.2.1",
-        "nyc": "^11.4.1"
-    },
-    "nyc": {
-        "exclude": [
-            "spec/*",
-            "lib/schemas/*"
-        ]
-    }
+	"name": "nasa-library",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"scripts": {
+		"start": "ts-node ./index.ts",
+		"dev": "ts-node-dev --respawn ./index.ts",
+		"build": "npm install && cd app && npm install && npm run-script build",
+		"test": "nyc --reporter=html --check-coverage --lines 90 node ./spec/support/jasmine-runner.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"cookie-parser": "^1.4.5",
+		"cors": "^2.8.4",
+		"csprng": "^0.1.2",
+		"express": "^4.16.3",
+		"express-jsonschema": "^1.1.6",
+		"get-port": "^4.0.0",
+		"jwt-simple": "^0.5.1",
+		"mongodb": "^2.2.36",
+		"ms": "^2.1.1",
+		"net": "^1.0.2",
+		"request": "^2.88.0",
+		"uuid": "^3.3.2"
+	},
+	"devDependencies": {
+		"@types/cookie-parser": "^1.4.2",
+		"@types/cors": "^2.8.12",
+		"@types/csprng": "^0.1.1",
+		"@types/express": "^4.16.0",
+		"@types/express-jsonschema": "^1.1.1",
+		"@types/jasmine": "^2.8.6",
+		"@types/jwt-simple": "^0.5.33",
+		"@types/mongodb": "2.2.19",
+		"@types/ms": "^0.7.31",
+		"@types/request": "^2.48.7",
+		"@types/uuid": "^8.3.1",
+		"jasmine": "2.8.0",
+		"jasmine-spec-reporter": "^4.2.1",
+		"nyc": "^11.4.1",
+		"ts-node": "^10.2.1",
+		"ts-node-dev": "^1.1.8",
+		"typescript": "^4.4.2"
+	},
+	"nyc": {
+		"exclude": [
+			"spec/*",
+			"lib/schemas/*"
+		]
+	}
 }

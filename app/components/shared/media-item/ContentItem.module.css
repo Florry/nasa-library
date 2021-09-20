@@ -1,0 +1,37 @@
+.content-item--fullscreen {
+	color: white;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	cursor: pointer;
+	background-color: black;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	text-align: center;
+	z-index: 20;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+
+.content-item__image--fullscreen {
+	margin-right: auto;
+	margin-left: auto;
+	max-height: 100%;
+	max-width: 100%;
+	z-index: 2000;
+	border: 1px solid grey;
+}
+
+.close_button {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	background-color: #333;
+	padding: 20px;
+	z-index: 2001;
+	user-select: none;
+}

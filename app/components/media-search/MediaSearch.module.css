@@ -1,0 +1,33 @@
+.media-search__form {
+	max-width: 350px;
+	margin-top: 20px;
+}
+
+.media-search__form__load-more-button, .media-search__form__search-button {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.media-search__search-result {
+	margin-top: 20px;
+	width: 100%;
+	padding: 10px;
+}
+
+.pagination_container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.pagination_container button {
+	margin: 0;
+}
+
+.number_buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}

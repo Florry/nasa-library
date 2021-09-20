@@ -1,0 +1,7 @@
+.login__input {
+	display: block;
+}
+
+.login__error-panel--error {
+	color: red;
+}
