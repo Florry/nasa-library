@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useStore } from "../../../stores/StoreContext";
-import Utils from "../../../utils/Utils";
+import { formatDate } from "../../../utils/utils";
 import ContentItem from "./ContentItem";
 import styles from "./MediaItem.module.css";
 
@@ -138,7 +138,7 @@ const MediaItem = ({ id, resultNumber, removeOnUnfavorite }: Props) => {
 
 			<div className={styles["media-item__details"]}>
 
-				<p className={styles["media-item__date"]}>{Utils.formatDate(date)}</p>
+				<p className={styles["media-item__date"]}>{formatDate(date)}</p>
 
 				<span
 					title={isFavorited ? "unfavorite" : "favorite"}
