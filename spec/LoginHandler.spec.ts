@@ -1,8 +1,8 @@
 import { Server } from "http";
 import { CREATE_USER, LOGIN } from "../lib/constants/endpoint-constants";
 import { start } from "../server";
-import { MONGO_SPEC_URL } from "./support/SpecConstants";
-import SpecUtils from "./support/SpecUtils";
+import { MONGO_SPEC_URL } from "./support/spec-constants";
+import { clearDatabases, post } from "./support/spec-utils";
 
 describe("LoginHandler", () => {
 
@@ -11,7 +11,7 @@ describe("LoginHandler", () => {
 	beforeEach(async () => server = await start(MONGO_SPEC_URL));
 
 	afterEach(async () => {
-		await SpecUtils.clearDatabases();
+		await clearDatabases();
 		await server.close();
 	});
 
@@ -20,8 +20,8 @@ describe("LoginHandler", () => {
 			const username = "user1";
 			const password = "Localhost:3030";
 
-			const registrationResponse = await SpecUtils.post(CREATE_USER, { username, password });
-			const loginResponse = await SpecUtils.post(LOGIN, { username, password });
+			const registrationResponse = await post(CREATE_USER, { username, password });
+			const loginResponse = await post(LOGIN, { username, password });
 
 			expect(loginResponse.headers.accesstoken).toBeDefined("loginResponse.headers.accesstoken");
 			expect(loginResponse.headers.accesstoken.length).toBeGreaterThan(632, "loginResponse.headers.accesstoken.legnth");
@@ -42,10 +42,10 @@ describe("LoginHandler", () => {
 			const username = "user1";
 			const password = "Localhost:3030";
 
-			await SpecUtils.post(CREATE_USER, { username, password });
+			await post(CREATE_USER, { username, password });
 
 			try {
-				await SpecUtils.post(LOGIN, { username, password: "Localhost:4040" });
+				await post(LOGIN, { username, password: "Localhost:4040" });
 				fail();
 			} catch (err: any) {
 				expect(err.statusCode).toBe(401, "Response error status code");
@@ -61,10 +61,10 @@ describe("LoginHandler", () => {
 			const username = "user1";
 			const password = "Localhost:3030";
 
-			await SpecUtils.post(CREATE_USER, { username, password });
+			await post(CREATE_USER, { username, password });
 
 			try {
-				await SpecUtils.post(LOGIN, { username: "username", password });
+				await post(LOGIN, { username: "username", password });
 				fail();
 			} catch (err: any) {
 				expect(err.statusCode).toBe(401, "Response error status code");

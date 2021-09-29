@@ -4,8 +4,8 @@ import { AUTHENTICATION_TOKEN_NAME, AUTHENTICATION_TOKEN_NAME_OUT } from "../lib
 import { FAVORITES } from "../lib/constants/collection-constants";
 import { ADD_FAVORITE } from "../lib/constants/endpoint-constants";
 import { start } from "../server";
-import { MONGO_SPEC_URL } from "./support/SpecConstants";
-import SpecUtils from "./support/SpecUtils";
+import { MONGO_SPEC_URL } from "./support/spec-constants";
+import { clearDatabases, createUserAccount, login, post } from "./support/spec-utils";
 
 describe("AddFavoriteHandler", () => {
 
@@ -19,7 +19,7 @@ describe("AddFavoriteHandler", () => {
 	});
 
 	afterEach(async () => {
-		await SpecUtils.clearDatabases();
+		await clearDatabases();
 		await server.close();
 	});
 
@@ -49,15 +49,15 @@ describe("AddFavoriteHandler", () => {
 				href: "https://images-assets.nasa.gov/image/NASA 60th_SEAL_BLACK_300DPI/collection.json"
 			};
 
-			await SpecUtils.createUserAccount();
+			await createUserAccount();
 
-			const loginResponse: any = await SpecUtils.login();
+			const loginResponse: any = await login();
 			const accesstoken = loginResponse.headers[AUTHENTICATION_TOKEN_NAME_OUT];
 
 			const requestHeaders: Record<string, any> = {};
 			requestHeaders[AUTHENTICATION_TOKEN_NAME] = `Bearer ${accesstoken}`;
 
-			const addFavoriteResponse = await SpecUtils.post(ADD_FAVORITE, { nasaId, asset }, requestHeaders);
+			const addFavoriteResponse = await post(ADD_FAVORITE, { nasaId, asset }, requestHeaders);
 
 			expect(addFavoriteResponse.body.userId).toBe(loginResponse.body.id, "addFavoriteResponse.body.userId");
 			expect(addFavoriteResponse.body.nasaId).toBe(nasaId, "addFavoriteResponse.body.nasaId");
@@ -101,7 +101,7 @@ describe("AddFavoriteHandler", () => {
 				href: "https://images-assets.nasa.gov/image/NASA 60th_SEAL_BLACK_300DPI/collection.json"
 			};
 
-			await SpecUtils.post(ADD_FAVORITE, { nasaId, asset });
+			await post(ADD_FAVORITE, { nasaId, asset });
 
 			fail();
 		} catch (err: any) {

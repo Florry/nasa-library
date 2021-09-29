@@ -1,11 +1,11 @@
-import SpecUtils from "./support/SpecUtils";
 import { Server } from "http";
 import mongodb, { Db } from "mongodb";
-import { MONGO_SPEC_URL } from "./support/SpecConstants";
+import { MONGO_SPEC_URL } from "./support/spec-constants";
 import { AUTHENTICATION_TOKEN_NAME, AUTHENTICATION_TOKEN_NAME_OUT } from "../lib/constants/autentication-constants";
 import { ADD_FAVORITE, REMOVE_FAVORITE } from "../lib/constants/endpoint-constants";
 import { FAVORITES } from "../lib/constants/collection-constants";
 import { start } from "../server";
+import { clearDatabases, createUserAccount, deleteRequest, login, post } from "./support/spec-utils";
 
 describe("RemoveFavoriteHandler", () => {
 
@@ -19,7 +19,7 @@ describe("RemoveFavoriteHandler", () => {
 	});
 
 	afterEach(async () => {
-		await SpecUtils.clearDatabases();
+		await clearDatabases();
 		await server.close();
 	});
 
@@ -32,17 +32,17 @@ describe("RemoveFavoriteHandler", () => {
 				href: "https://images-assets.nasa.gov/image/NASA 60th_SEAL_BLACK_300DPI/collection.json"
 			};
 
-			await SpecUtils.createUserAccount();
+			await createUserAccount();
 
-			const loginResponse = await SpecUtils.login();
+			const loginResponse = await login();
 			const accesstoken = loginResponse.headers[AUTHENTICATION_TOKEN_NAME_OUT];
 
 			const requestHeaders: Record<string, string> = {};
 			requestHeaders[AUTHENTICATION_TOKEN_NAME] = `Bearer ${accesstoken}`;
 
-			await SpecUtils.post(ADD_FAVORITE, { nasaId, asset }, requestHeaders);
+			await post(ADD_FAVORITE, { nasaId, asset }, requestHeaders);
 
-			const removeFavoriteResponse = await SpecUtils.delete(REMOVE_FAVORITE.replace(":nasaId", nasaId), requestHeaders);
+			const removeFavoriteResponse = await deleteRequest(REMOVE_FAVORITE.replace(":nasaId", nasaId), requestHeaders);
 
 			expect(removeFavoriteResponse.body.favoriteRemoved).toBeTruthy("Should return flag favoriteRemoved true");
 
@@ -64,10 +64,10 @@ describe("RemoveFavoriteHandler", () => {
 				href: "https://images-assets.nasa.gov/image/NASA 60th_SEAL_BLACK_300DPI/collection.json"
 			};
 
-			await SpecUtils.createUserAccount();
+			await createUserAccount();
 
-			await SpecUtils.login();
-			await SpecUtils.post(ADD_FAVORITE, { nasaId, asset });
+			await login();
+			await post(ADD_FAVORITE, { nasaId, asset });
 
 			fail();
 		} catch (err: any) {
@@ -79,7 +79,7 @@ describe("RemoveFavoriteHandler", () => {
 		try {
 			const nasaId = "hello-nasa";
 
-			await SpecUtils.post(REMOVE_FAVORITE, { nasaId });
+			await post(REMOVE_FAVORITE, { nasaId });
 
 			fail();
 		} catch (err: any) {
