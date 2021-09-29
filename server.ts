@@ -17,7 +17,7 @@ let db: Db;
  */
 export async function start(mongodbUrl: string = "mongodb://localhost:27017/nasa-library") {
 	db = await setupMongoDb(mongodbUrl);
-	setupHttpServer();
+	return setupHttpServer();
 }
 
 /**
@@ -49,6 +49,8 @@ function setupHttpServer() {
 	routes(app, db);
 
 	server = app.listen(BACKEND_PORT, () => { console.log(`Server running on ${BACKEND_PORT}.`); });
+
+	return server;
 }
 
 /**
@@ -57,11 +59,11 @@ function setupHttpServer() {
 async function setupMongoDb(mongodbUrl: string) {
 	const db = await mongo.connect(mongodbUrl);
 
-	db.collection(USERS).createIndex({ username: 1 }, { unique: true, partialFilterExpression: { username: { $exists: true } } });
+	await db.collection(USERS).createIndex({ username: 1 }, { unique: true, partialFilterExpression: { username: { $exists: true } } });
 
-	db.collection(SESSIONS).createIndex({ userId: 1 }, { unique: true, partialFilterExpression: { userId: { $exists: true } } });
+	await db.collection(SESSIONS).createIndex({ userId: 1 }, { unique: true, partialFilterExpression: { userId: { $exists: true } } });
 
-	db.collection(FAVORITES).createIndex({ userId: 1, nasaId: 1 }, { unique: true, partialFilterExpression: { userId: { $exists: true }, nasaId: { $exists: true } } });
+	await db.collection(FAVORITES).createIndex({ userId: 1, nasaId: 1 }, { unique: true, partialFilterExpression: { userId: { $exists: true }, nasaId: { $exists: true } } });
 
 	return db;
 }

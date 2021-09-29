@@ -7,6 +7,7 @@ Base functionality is implemented.
 - Redo all css, take advantage of nextjs css modules and get some better styling going.
 - Fix all code TODOs.
 - Go through backend code and clean things up (the code is only converted to typescript and is a few years old)
+- Implement full test coverage
 
 ## // readme TODO:
 - single run command for both frontend and backend
@@ -43,3 +44,6 @@ then
 ## How to run frontend
 - cd `./app`
 - run `npm dev`
+
+## how to run tests
+- run `npm test`

@@ -18,7 +18,7 @@ export class LogoutHandler {
 				req.user.id
 			);
 
-			res.setHeader("Set-Cookie", "jwt=true;HttpOnly;Expires=1970-09-07;SameSite=strict;Path=/");
+			res.setHeader("Set-Cookie", "jwt=true;HttpOnly;Expires=" + new Date("1970-09-07").toUTCString() + ";SameSite=strict;Path=/");
 
 			res.end();
 		} catch (err) {

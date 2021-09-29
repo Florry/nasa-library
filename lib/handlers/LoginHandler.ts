@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import ms from "ms";
 import { AUTHENTICATION_TOKEN_NAME_OUT } from "../constants/autentication-constants";
 import { AuthManager } from "../managers/AuthManager";
 import { UserRepo } from "../repos/UserRepo";
@@ -21,8 +22,10 @@ export class LoginHandler {
 			const user = await this.userRepo.getByUsername(username);
 
 			res.setHeader(AUTHENTICATION_TOKEN_NAME_OUT, authToken);
-			// TODO: implement better cookie setting
-			res.setHeader("Set-Cookie", "jwt=" + authToken + ";HttpOnly;Expires=2021-09-07;SameSite=strict;Path=/");
+
+			const expires = new Date(Date.now() + ms("1d")).toUTCString();
+			// TODO: implement better cookie setting, path should never be / !
+			res.setHeader("Set-Cookie", "jwt=" + authToken + ";HttpOnly;Expires=" + expires + ";SameSite=strict;Path=/");
 
 
 			res.json(user?.toViewModel() ?? {});

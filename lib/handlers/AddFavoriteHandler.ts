@@ -23,6 +23,7 @@ export class AddFavoriteHandler {
 
 			try {
 				const addedFavorite = await this.favoritesRepo.addFavorite(favorite);
+
 				res.json(addedFavorite);
 			}
 			catch (err) {

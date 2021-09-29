@@ -10,7 +10,12 @@ const MediaSearchPagination = () => {
 
 	let page = router.query.page ? Number.parseInt(router.query.page as string) : 1;
 
-	const numberOfPages = Math.ceil(totalCount / 100);
+	const actualNumbersOfResults = Math.ceil(totalCount / 100);
+	/**
+	 * Technically the api returns more results than 10000
+	 * but it only seems to support 100 pages before returning 'Maximum number of search results have been displayed. Please refine your search.'
+	*/
+	const numberOfPages = Math.min(actualNumbersOfResults, 100);
 
 	const loadNextPage = async () => {
 		router.push({ query: toQueryString({ ...router.query, page: ++page }) });
@@ -47,29 +52,38 @@ const MediaSearchPagination = () => {
 	}
 
 	return (
-		<div
-			className={styles.pagination_container}
-		>
-			<button
-				className={styles["media-search__form__load-more-button"]}
-				onClick={loadPreviousPage}
-				disabled={page === 1 || !page}
+		<>
+			<div
+				className={styles.pagination_container}
 			>
-				Previous page
-			</button>
+				<button
+					className={styles["media-search__form__load-more-button"]}
+					onClick={loadPreviousPage}
+					disabled={page === 1 || !page}
+				>
+					Previous page
+				</button>
 
-			<div className={styles.number_buttons}>
-				{getNumberButtons()}
+				<div className={styles.number_buttons}>
+					{getNumberButtons()}
+				</div>
+
+				<button
+					className={styles["media-search__form__load-more-button"]}
+					onClick={loadNextPage}
+					disabled={page >= numberOfPages}
+				>
+					Next page
+				</button>
 			</div>
-
-			<button
-				className={styles["media-search__form__load-more-button"]}
-				onClick={loadNextPage}
-				disabled={page >= numberOfPages}
-			>
-				Next page
-			</button>
-		</div>
+			<div>
+				{
+					actualNumbersOfResults > 100
+						? <>There are <b>{actualNumbersOfResults * 100 - 10000}</b> more results after page 100, but nasa says <i>"Maximum number of search results have been displayed. Please refine your search."</i>. So do that to get more results 😁</>
+						: ""
+				}
+			</div>
+		</>
 	);
 };
 

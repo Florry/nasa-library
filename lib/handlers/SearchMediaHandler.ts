@@ -9,7 +9,7 @@ export class SearchMediaHandler {
 
 	async handle(req: Request, res: Response) {
 		try {
-			const nasaQuery = new SearchQuery(req.query);
+			const nasaQuery = new SearchQuery(req.query as any);
 			const resp: any = await NasaMediaLibraryClient.searchAssets(nasaQuery);
 			const output = {
 				data: {
@@ -45,6 +45,13 @@ export class SearchMediaHandler {
 
 				return item;
 			});
+
+			console.log("\n");
+			console.log("=======================================");
+			console.log("output.data.totalItems");
+			console.log("=======================================");
+			console.log(require("util").inspect(output.data.totalItems, null, null, true));
+			console.log("\n");
 
 			res.json(output);
 		} catch (err) {

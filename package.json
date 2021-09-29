@@ -7,11 +7,13 @@
 		"start": "ts-node ./index.ts",
 		"dev": "ts-node-dev --respawn ./index.ts",
 		"build": "npm install && cd app && npm install && npm run-script build",
-		"test": "nyc --reporter=html --check-coverage --lines 90 node ./spec/support/jasmine-runner.js"
+		"test": "nyc --reporter=html  ts-node ./spec/support/jasmine-runner.ts",
+		"test:watch": "ts-node-dev --respawn --no-notify ./spec/support/jasmine-runner.ts"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"cookie": "^0.4.0",
 		"cookie-parser": "^1.4.5",
 		"cors": "^2.8.4",
 		"csprng": "^0.1.2",
@@ -37,12 +39,12 @@
 		"@types/ms": "^0.7.31",
 		"@types/request": "^2.48.7",
 		"@types/uuid": "^8.3.1",
-		"jasmine": "2.8.0",
-		"jasmine-spec-reporter": "^4.2.1",
-		"nyc": "^11.4.1",
+		"jasmine": "3.9.0",
+		"jasmine-spec-reporter": "^7.0.0",
+		"nyc": "^15.1.0",
 		"ts-node": "^10.2.1",
 		"ts-node-dev": "^1.1.8",
-		"typescript": "^4.4.2"
+		"typescript": "^4.4.3"
 	},
 	"nyc": {
 		"exclude": [

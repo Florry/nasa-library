@@ -1,46 +1,46 @@
 interface SearchQueryInput {
 
 	/** Free text search terms to compare to all indexed metadata. */
-	q: string;
+	q?: string;
 
 	/** NASA center which published the media. */
-	center: string;
+	center?: string;
 
 	/** Terms to search for in “Description” fields. */
-	description: string;
+	description?: string;
 
 	/** Terms to search for in “508 Description” fields */
-	description_508: string;
+	description_508?: string;
 
 	/** Terms to search for in “Keywords” fields. Separate multiple values with commas. */
-	keywords: string;
+	keywords?: string;
 
 	/** Terms to search for in “Location” fields. */
-	location: string;
+	location?: string;
 
 	/** Media types to restrict the search to. Available types: [“image”, “audio”]. Separate multiple values with commas. */
-	media_type: string;
+	media_type?: string;
 
 	/** The media asset’s NASA ID. */
-	nasa_id: string;
+	nasa_id?: string;
 
 	/** The primary photographer’s name. */
-	photographer: string;
+	photographer?: string;
 
 	/** A secondary photographer/videographer’s name. */
-	secondary_creator: string;
+	secondary_creator?: string;
 
 	/** Terms to search for in “Title” fields. */
-	title: string;
+	title?: string;
 
 	/** The start year for results. Format: YYYY. */
-	year_start: string;
+	year_start?: string;
 
 	/** The end year for results. Format: YYYY. */
-	year_end: string;
+	year_end?: string;
 
 	/** the current page */
-	page: number;
+	page?: number;
 }
 
 /**
@@ -81,7 +81,7 @@ export class SearchQuery {
 		this.year_start = httpQuery.year_start;
 		this.year_end = httpQuery.year_end;
 
-		if (httpQuery.page > 0)
+		if (httpQuery.page! > 0)
 			this.page = httpQuery.page;
 		else
 			this.page = 1;
