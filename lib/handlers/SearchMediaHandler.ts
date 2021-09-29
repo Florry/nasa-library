@@ -46,13 +46,6 @@ export class SearchMediaHandler {
 				return item;
 			});
 
-			console.log("\n");
-			console.log("=======================================");
-			console.log("output.data.totalItems");
-			console.log("=======================================");
-			console.log(require("util").inspect(output.data.totalItems, null, null, true));
-			console.log("\n");
-
 			res.json(output);
 		} catch (err) {
 			res
